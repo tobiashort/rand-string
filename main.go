@@ -32,10 +32,11 @@ FLAGS
 }
 
 const (
-	Symbols   = "!\"#$%&'()*+,-./:;<>=?@[\\]^_`{|}~"
-	Lowercase = "abcdefghijklmnopqrstuvwxyz"
-	Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	Numbers   = "0123456789"
+	Symbols      = "!\"#$%&'()*+,-./:;<>=?@[\\]^_`{|}~"
+	Lowercase    = "abcdefghijklmnopqrstuvwxyz"
+	Uppercase    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	Numbers      = "0123456789"
+	Hexadecimals = Numbers + "abcdef"
 )
 
 func main() {
@@ -44,6 +45,7 @@ func main() {
 	var flagUppercase bool
 	var flagNumbers bool
 	var flagSymbols bool
+	var flagHex bool
 	var flagAlphabet string
 	var flagCount int
 
@@ -53,6 +55,7 @@ func main() {
 	flag.BoolVar(&flagUppercase, "u", false, "uppercase characters [A-Z]")
 	flag.BoolVar(&flagNumbers, "n", false, "numbers [0-9]")
 	flag.BoolVar(&flagSymbols, "s", false, fmt.Sprintf("symbols [%s]", Symbols))
+	flag.BoolVar(&flagHex, "H", false, "hexadecimals [0-9a-f]")
 	flag.StringVar(&flagAlphabet, "a", "", "alphabet to be used instead")
 	flag.IntVar(&flagCount, "c", 1, "the amount of strings to be generated")
 	flag.Parse()
@@ -73,6 +76,8 @@ func main() {
 
 	if flagAlphabet != "" {
 		alphabet = flagAlphabet
+	} else if flagHex {
+		alphabet = Hexadecimals
 	} else {
 		if flagLowercase {
 			alphabet += Lowercase
